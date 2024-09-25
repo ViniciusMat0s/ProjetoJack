@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-html-configmap
+  labels:
+    app: {{ .Chart.Name }}
+    desafio: jackexperts
+data:
+  index.html: |
+    {{ .Files.Get "index.html" | indent 4 }}

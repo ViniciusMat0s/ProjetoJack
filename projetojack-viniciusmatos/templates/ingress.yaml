@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: jack-ingress
+  labels:
+    app: jack
+    desafio: jackexperts
+spec:
+  rules:
+    - host: "localhost"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: jack-service  # Nome do seu serviço
+                port:
+                  number: 80

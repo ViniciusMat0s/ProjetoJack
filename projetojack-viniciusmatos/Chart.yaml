@@ -1,0 +1,4 @@
+apiVersion: v2
+name: nginx
+description: Helm Nginx
+version: 0.1.0
