@@ -5,16 +5,14 @@ stages:
   - deploy
 
 variables:
-  TAG: $CI_COMMIT_SHORT_$HA
+  TAG: $CI_COMMIT_SHORT_SHA
   IMAGE: $CI_REGISTRY_IMAGE:$TAG
 
 build:
   image: docker:20.10.16
   stage: build
   services:
-    - name: docker:20.10.16-dind
-      command: ["--host=unix:///var/run/docker.sock"]
-
+    - docker:20.10.16-dind
   script:
     - docker build -t $IMAGE .
     - docker save --output projetojack.tar $IMAGE
