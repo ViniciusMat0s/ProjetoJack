@@ -4,6 +4,7 @@ Este projeto implementa uma imagem nginx configurada pelo Helm e hospedada em Ku
 <br>
 
 *Adições*
+<br>
 De acordo com os requisitos, estas foram as adições:
 <br>
 
@@ -22,13 +23,14 @@ Pipeline CI/CD para build e deploy da aplicação.<br>
 
 <br>
 
-###1. Construção e Publicação da Imagem Docker
+*1. Construção e Publicação da Imagem Docker*
 Construímos e publicamos nossa imagem utilizando os comandos abaixo:
 
 docker build -t viniciusbaratt0mat0s/projetojack:1.5 .
 docker push viniciusbaratt0mat0s/projetojack:1.5
 <br>
-###2. ConfigMap
+
+*2. ConfigMap*
 O ConfigMap armazenando o HTML.
 
                     apiVersion: v1
@@ -42,7 +44,8 @@ O ConfigMap armazenando o HTML.
                       index.html: |
                             
 <br>              
-###3. Deploy com Helm
+
+*3. Deploy*
 Deployment definindo os objetos do projeto.
 
                     apiVersion: apps/v1
@@ -75,8 +78,9 @@ Deployment definindo os objetos do projeto.
                             - name: html-volume
                               configMap:
                                 name: projetojack-nginx-config
-                
-###3.2. Values
+<br>
+
+*3.2. Values*
                     replicaCount: 1
 
                     image:
@@ -108,7 +112,8 @@ Deployment definindo os objetos do projeto.
                             pathType: Prefix
                 
 <br>
-##4. Hospedando com o Ingress
+
+*4. Hospedando com o Ingress*
 O Ingress hospeda o projeto localmente:
 
                     apiVersion: networking.k8s.io/v1
@@ -129,9 +134,10 @@ O Ingress hospeda o projeto localmente:
                                     name: projetojack-nginx
                                     port:
                                       number: 8080
-                
-##Conclusão:
+
+<br>
+
+*Conclusão:*
 O projeto é hospeda um projeto configurado com Helm dentro de um cluster. Atendendo os requisitos do desafio, sendo seguro e personalizável
-Foi um projeto intrigante, porém estressante, talvez por falta de um conhecimento sólido envolvendo o fluxo real de desenvolvimento, 
-houveram algumas coisas que não foram concluídas, por exemplo, a abertura de portas via Ingress, o projeto só é acessado via
-comando kubectl port-forward service/projetojack-service 8080:80. O projeto foi feito "em conjunto" com os colegas Armando e Gustavo, dos quais nos ajudamos igualmente, resolvendo alguns problemas comuns para ambos os lados, também, recebendo uma ajudinha do ChatGPT, pois sem instruções concretas, não conseguiríamos concluir a aplicação.
+Foi um projeto intrigante, porém estressante, foram mais de 30 horas em menos de 3 dias; talvez por falta de um conhecimento sólido envolvendo o fluxo real de desenvolvimento, foi bem difícil chegar até aqui, mas com muito empenho e networking, consegui. Houveram algumas coisas que não foram concluídas, por exemplo, a abertura de portas via Ingress, o projeto só é acessado via comando 
+*kubectl port-forward service/projetojack-service 8080:80*. O projeto foi feito "em conjunto" com os colegas Armando e Gustavo, dos quais nos ajudamos igualmente, resolvendo alguns problemas comuns para ambos os lados, também, recebendo uma ajudinha do ChatGPT, pois sem instruções concretas, não conseguiríamos concluir a aplicação.
