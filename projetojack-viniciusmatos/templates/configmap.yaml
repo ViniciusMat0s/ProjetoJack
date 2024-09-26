@@ -234,6 +234,41 @@ data:
                           </pre>
                       </div>
 
+                      <h3>3.2. Values</h3>
+                      <div class="code-box">
+                          <pre>
+                              replicaCount: 1
+
+                              image:
+                                repository: viniciusbaratt0mat0s/projetojack
+                                tag: "latesd"
+                                pullPolicy: IfNotPresent
+
+                              service:
+                                type: ClusterIP
+                                port: 8080
+
+                              labels:
+                                desafio: jackexperts
+
+                              resources:
+                                limits:
+                                  memory: "128Mi"
+                                  cpu: "500m"
+                                requests:
+                                  memory: "64Mi"
+                                  cpu: "250m"
+
+                              ingress:
+                                enabled: true
+                                hosts:
+                                  - host: 192.168.58.1 
+                                    paths:
+                                      - path: /
+                                        pathType: Prefix
+                          </pre>
+                      </div>
+
                       <h3>4. Hospedando com o Ingress</h3>
                       <p>O <strong>Ingress</strong> hospeda o projeto publicamente:</p>
 
