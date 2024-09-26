@@ -17,14 +17,14 @@ replicaCount: 1
 
 service:
   type: ClusterIP
-  port: 80
+  port: 8080
 
 ingress:
   enabled: true
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
   hosts:
-    - host: localhost
+    - host: "localhost"
       paths:
         - path: /
           pathType: Prefix

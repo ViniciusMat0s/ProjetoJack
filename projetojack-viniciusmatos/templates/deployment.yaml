@@ -20,7 +20,7 @@ spec:
         - name: {{ .Chart.Name }}
           image: nginx:alpine
           ports:
-            - containerPort: 80
+            - containerPort: 8080
           volumeMounts:
             - name: html-volume
               mountPath: /usr/share/nginx/html
@@ -31,4 +31,4 @@ spec:
       volumes:
         - name: html-volume
           configMap:
-            name: html-configmap
+            name: {{ .Release.Name }}-html-configmap
