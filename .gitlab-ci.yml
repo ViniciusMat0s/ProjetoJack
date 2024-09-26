@@ -1,0 +1,26 @@
+stages:
+  - build
+  - test
+  - push
+  - deploy
+
+variables:
+  TAG: $CI_COMMIT_SHORT_$HA
+  IMAGE: $CI_REGISTRY_IMAGE:$TAG
+
+build:
+  image: docker:20.10.16
+  stage: build
+  services:
+    - docker:20.10.16-dind
+  script:
+    - docker build -t $IMAGE .
+    - docker save --output projetojack.tar $IMAGE
+  artifacts:
+    untracked: true
+    paths:
+      - "projetojack.tar"
+    expire_in: 1 day
+  only:
+    - main
+    - develop
