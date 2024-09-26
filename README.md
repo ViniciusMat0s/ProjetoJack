@@ -79,8 +79,7 @@ Deployment definindo os objetos do projeto.
                                 name: projetojack-nginx-config
 <br>
 
-*3.2. Values*<br>
-                    replicaCount: 1
+*3.2. Values* (por algum motivo, o "replicaCount ficou fora da linha de código.)<br>
                     replicaCount: 1
                     
                     image:
