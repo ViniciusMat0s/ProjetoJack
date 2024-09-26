@@ -81,7 +81,8 @@ Deployment definindo os objetos do projeto.
 
 *3.2. Values*<br>
                     replicaCount: 1
-
+                    replicaCount: 1
+                    
                     image:
                     repository: viniciusbaratt0mat0s/projetojack
                     tag: "latesd"
