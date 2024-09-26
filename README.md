@@ -22,14 +22,14 @@ Pipeline CI/CD para build e deploy da aplicação.<br>
 
 <br>
 
-*1. Construção e Publicação da Imagem Docker*
+*1. Construção e Publicação da Imagem Docker*<br>
 Construímos e publicamos nossa imagem utilizando os comandos abaixo:
 
 docker build -t viniciusbaratt0mat0s/projetojack:1.5 . <br>
 docker push viniciusbaratt0mat0s/projetojack:1.5
 <br>
 
-*2. ConfigMap*
+*2. ConfigMap*<br>
 O ConfigMap armazenando o HTML.
 
                     apiVersion: v1
@@ -44,7 +44,7 @@ O ConfigMap armazenando o HTML.
                             
 <br>              
 
-*3. Deploy*
+*3. Deploy*<br>
 Deployment definindo os objetos do projeto.
 
                     apiVersion: apps/v1
@@ -112,7 +112,7 @@ Deployment definindo os objetos do projeto.
                 
 <br>
 
-*4. Hospedando com o Ingress*
+*4. Hospedando com o Ingress*<br>
 O Ingress hospeda o projeto localmente:
 
                     apiVersion: networking.k8s.io/v1
