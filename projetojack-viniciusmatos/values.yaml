@@ -1,9 +1,16 @@
-domain: ""
+replicaCount: 1
 
 image:
   repository: viniciusbaratt0mat0s/projetojack
   tag: "latesd"
   pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8080
+
+labels:
+  desafio: jackexperts
 
 resources:
   limits:
@@ -13,21 +20,10 @@ resources:
     memory: "64Mi"
     cpu: "250m"
 
-replicaCount: 1
-
-service:
-  type: ClusterIP
-  port: 8080
-
 ingress:
   enabled: true
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
   hosts:
-    - host: "localhost"
+    - host: 192.168.58.1 
       paths:
         - path: /
           pathType: Prefix
-
-labels:
-  desafio: jackexperts

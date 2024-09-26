@@ -1,11 +1,10 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: meu-ingress
+  name: projetojack-ingress
+  namespace: projetojack
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
-  labels:
-    desafio: jack-experts
 spec:
   rules:
   - host: localhost
@@ -15,6 +14,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: meu-app
+            name: projetojack-service
             port:
               number: 8080

@@ -1,26 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-deployment
+  name: nginx-deployment
+  namespace: kube-system
   labels:
-    app: {{ .Chart.Name }}
+    app: nginx
     desafio: jackexperts
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ .Chart.Name }}
+      app: nginx
   template:
     metadata:
       labels:
-        app: {{ .Chart.Name }}
+        app: nginx
         desafio: jackexperts
     spec:
       containers:
-        - name: {{ .Chart.Name }}
+        - name: nginx
           image: nginx:alpine
           ports:
-            - containerPort: 8080
+            - containerPort: 80
           volumeMounts:
             - name: html-volume
               mountPath: /usr/share/nginx/html
@@ -31,4 +32,4 @@ spec:
       volumes:
         - name: html-volume
           configMap:
-            name: {{ .Release.Name }}-html-configmap
+            name: nginx-html-configmap
