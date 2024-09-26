@@ -1,8 +1,10 @@
-Visão Geral
+#Visão Geral
 Este projeto implementa uma imagem nginx configurada pelo Helm e hospedada em Kubernetes. O HTML do projeto é configurado pelo ConfigMaps e a imagem, aplicada pelo Docker. Todos os objetos no cluster possuem a label desafio=jackexperts, como solicitado no desafio.
+<br>
 
-Adições
+##Adições
 De acordo com os requisitos, estas foram as adições:
+<br>
 
 Uso de repositório git com Dockerfile e Helm;
 A imagem deve ser construída por você e publicada no Docker Hub;
@@ -13,14 +15,15 @@ A aplicação deve possuir um domínio para acesso;
 Todos os objetos no cluster instalados via Helm, devem possuir a label desafio=jackexperts;
 Documentação;
 Pipeline CI/CD para build e deploy da aplicação.
-Execução
-1. Construção e Publicação da Imagem Docker
+<br>
+##Execução
+###1. Construção e Publicação da Imagem Docker
 Construímos e publicamos nossa imagem utilizando os comandos abaixo:
 
 docker build -t viniciusbaratt0mat0s/projetojack:1.5 .
 docker push viniciusbaratt0mat0s/projetojack:1.5
-                
-2. ConfigMap
+<br>
+###2. ConfigMap
 O ConfigMap armazenando o HTML.
 
                     apiVersion: v1
@@ -33,8 +36,8 @@ O ConfigMap armazenando o HTML.
                     data:
                       index.html: |
                             
-                
-3. Deploy com Helm
+<br>              
+###3. Deploy com Helm
 Deployment definindo os objetos do projeto.
 
                     apiVersion: apps/v1
@@ -68,43 +71,40 @@ Deployment definindo os objetos do projeto.
                               configMap:
                                 name: projetojack-nginx-config
                 
-3.2. Values
-                    replicaCount: 3
+###3.2. Values
+                    replicaCount: 1
 
                     image:
-                      repository: nginx
-                      tag: stable
-                      pullPolicy: IfNotPresent
-                    
+                    repository: viniciusbaratt0mat0s/projetojack
+                    tag: "latesd"
+                    pullPolicy: IfNotPresent
+
                     service:
-                      enabled: true
-                      type: ClusterIP
-                      port: 8888
-                      targetPort: 80
-                      name: nginx-service
-                    
-                    ingress:
-                      enabled: true
-                      name: nginx-ingress
-                      hosts:
-                        - host: projetojack-viniciusmatos.com
-                          paths:
-                            - /
-                      tls:
-                        - secretName: nginx-tls
-                          hosts:
-                            - projetojack-viniciusmatos.com
-                    
+                    type: ClusterIP
+                    port: 8080
+
+                    labels:
+                    desafio: jackexperts
+
                     resources:
-                      limits:
-                        cpu: "500m"
+                    limits:
                         memory: "128Mi"
-                      requests:
-                        cpu: "250m"
+                        cpu: "500m"
+                    requests:
                         memory: "64Mi"
+                        cpu: "250m"
+
+                    ingress:
+                    enabled: true
+                    hosts:
+                        - host: 192.168.58.1 
+                        paths:
+                            - path: /
+                            pathType: Prefix
                 
-4. Hospedando com o Ingress
-O Ingress hospeda o projeto publicamente:
+<br>
+##4. Hospedando com o Ingress
+O Ingress hospeda o projeto localmente:
 
                     apiVersion: networking.k8s.io/v1
                     kind: Ingress
@@ -125,5 +125,8 @@ O Ingress hospeda o projeto publicamente:
                                     port:
                                       number: 8080
                 
-Conclusão
+##Conclusão:
 O projeto é hospeda um projeto configurado com Helm dentro de um cluster. Atendendo os requisitos do desafio, sendo seguro e personalizável
+Foi um projeto intrigante, porém estressante, talvez por falta de um conhecimento sólido envolvendo o fluxo real de desenvolvimento, 
+houveram algumas coisas que não foram concluídas, por exemplo, a abertura de portas via Ingress, o projeto só é acessado via
+comando kubectl port-forward service/projetojack-service 8080:80. O projeto foi feito "em conjunto" com os colegas Armando e Gustavo, dos quais nos ajudamos igualmente, resolvendo alguns problemas comuns para ambos os lados, também, recebendo uma ajudinha do ChatGPT, pois sem instruções concretas, não conseguiríamos concluir a aplicação.
