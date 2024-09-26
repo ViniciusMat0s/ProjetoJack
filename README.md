@@ -17,7 +17,6 @@ A aplicação deve possuir um domínio para acesso;<br>
 Todos os objetos no cluster instalados via Helm, devem possuir a label desafio=jackexperts;<br>
 Documentação;<br>
 Pipeline CI/CD para build e deploy da aplicação.<br>
-<br>
 
 *Execução*
 
@@ -26,7 +25,7 @@ Pipeline CI/CD para build e deploy da aplicação.<br>
 *1. Construção e Publicação da Imagem Docker*
 Construímos e publicamos nossa imagem utilizando os comandos abaixo:
 
-docker build -t viniciusbaratt0mat0s/projetojack:1.5 .
+docker build -t viniciusbaratt0mat0s/projetojack:1.5 . <br>
 docker push viniciusbaratt0mat0s/projetojack:1.5
 <br>
 
@@ -138,6 +137,7 @@ O Ingress hospeda o projeto localmente:
 <br>
 
 *Conclusão:*
-O projeto é hospeda um projeto configurado com Helm dentro de um cluster. Atendendo os requisitos do desafio, sendo seguro e personalizável
+<br>
+O projeto é hospeda um projeto configurado com Helm dentro de um cluster. Atendendo os requisitos do desafio, sendo seguro e personalizável.<br>
 Foi um projeto intrigante, porém estressante, foram mais de 30 horas em menos de 3 dias; talvez por falta de um conhecimento sólido envolvendo o fluxo real de desenvolvimento, foi bem difícil chegar até aqui, mas com muito empenho e networking, consegui. Houveram algumas coisas que não foram concluídas, por exemplo, a abertura de portas via Ingress, o projeto só é acessado via comando 
 *kubectl port-forward service/projetojack-service 8080:80*. O projeto foi feito "em conjunto" com os colegas Armando e Gustavo, dos quais nos ajudamos igualmente, resolvendo alguns problemas comuns para ambos os lados, também, recebendo uma ajudinha do ChatGPT, pois sem instruções concretas, não conseguiríamos concluir a aplicação.
