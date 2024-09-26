@@ -12,7 +12,9 @@ build:
   image: docker:20.10.16
   stage: build
   services:
-    - docker:20.10.16-dind
+    - name: docker:20.10.16-dind
+      command: ["--host=unix:///var/run/docker.sock"]
+
   script:
     - docker build -t $IMAGE .
     - docker save --output projetojack.tar $IMAGE
