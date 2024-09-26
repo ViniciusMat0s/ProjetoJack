@@ -1,22 +1,27 @@
-#Visão Geral
+*Visão Geral*
+<br>
 Este projeto implementa uma imagem nginx configurada pelo Helm e hospedada em Kubernetes. O HTML do projeto é configurado pelo ConfigMaps e a imagem, aplicada pelo Docker. Todos os objetos no cluster possuem a label desafio=jackexperts, como solicitado no desafio.
 <br>
 
-##Adições
+*Adições*
 De acordo com os requisitos, estas foram as adições:
 <br>
 
-Uso de repositório git com Dockerfile e Helm;
-A imagem deve ser construída por você e publicada no Docker Hub;
-A imagem não deve rodar com usuário root;
-A página web deve ser configurável via ConfigMap;
-O Helm deverá definir todos os objetos da aplicação;
-A aplicação deve possuir um domínio para acesso;
-Todos os objetos no cluster instalados via Helm, devem possuir a label desafio=jackexperts;
-Documentação;
-Pipeline CI/CD para build e deploy da aplicação.
+Uso de repositório git com Dockerfile e Helm;<br>
+A imagem deve ser construída por você e publicada no Docker Hub;<br>
+A imagem não deve rodar com usuário root;<br>
+A página web deve ser configurável via ConfigMap;<br>
+O Helm deverá definir todos os objetos da aplicação;<br>
+A aplicação deve possuir um domínio para acesso;<br>
+Todos os objetos no cluster instalados via Helm, devem possuir a label desafio=jackexperts;<br>
+Documentação;<br>
+Pipeline CI/CD para build e deploy da aplicação.<br>
 <br>
-##Execução
+
+*Execução*
+
+<br>
+
 ###1. Construção e Publicação da Imagem Docker
 Construímos e publicamos nossa imagem utilizando os comandos abaixo:
 
