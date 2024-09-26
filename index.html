@@ -171,16 +171,15 @@ docker push viniciusbaratt0mat0s/projetojack:1.5
             <p>O <strong>ConfigMap</strong> armazenando o HTML.</p>
             <div class="code-box">
                 <pre>
-                    apiVersion: v1
-                    kind: ConfigMap
-                    metadata:
-                      name: {{ .Release.Name }}-nginx-config
-                      labels:
-                        app: nginx
-                        desafio: jack-experts
-                    data:
-                      index.html: |
-                        {{ .Files.Get "index.html" | indent 4 }}
+               apiVersion: v1
+                kind: ConfigMap
+                metadata:
+                  name: {{ .Release.Name }}-html-configmap
+                  labels:
+                    app: {{ .Chart.Name }}
+                    desafio: jackexperts
+                data:
+                  index.html: |
                 </pre>
             </div>
 
@@ -190,75 +189,40 @@ docker push viniciusbaratt0mat0s/projetojack:1.5
             <div class="code-box">
                 <pre>
                     apiVersion: apps/v1
-                    kind: Deployment
-                    metadata:
-                      name: {{ .Release.Name }}-nginx
-                      labels:
+                  kind: Deployment
+                  metadata:
+                    name: nginx-deployment
+                    namespace: kube-system
+                    labels:
+                      app: nginx
+                      desafio: jackexperts
+                  spec:
+                    replicas: 1
+                    selector:
+                      matchLabels:
                         app: nginx
-                        desafio: jack-experts
-                    spec:
-                      replicas: 3
-                      selector:
-                        matchLabels:
+                    template:
+                      metadata:
+                        labels:
                           app: nginx
-                      template:
-                        metadata:
-                          labels:
-                            app: nginx
-                            desafio: jack-experts
-                        spec:
-                          containers:
-                            - name: nginx
-                              image: nginx:stable
-                              ports:
-                                - containerPort: 8888
-                              volumeMounts:
-                                - name: html-volume
-                                  mountPath: /usr/share/nginx/html
-                          volumes:
-                            - name: html-volume
-                              configMap:
-                                name: {{ .Release.Name }}-nginx-config
-                </pre>
-            </div>
-
-            <h3>3.2. Values</h3>
-
-            <div class="code-box">
-                <pre>
-                    replicaCount: 3
-
-                    image:
-                      repository: nginx
-                      tag: stable
-                      pullPolicy: IfNotPresent
-                    
-                    service:
-                      enabled: true
-                      type: ClusterIP
-                      port: 8888
-                      targetPort: 80
-                      name: nginx-service
-                    
-                    ingress:
-                      enabled: true
-                      name: nginx-ingress
-                      hosts:
-                        - host: projetojack-viniciusmatos.com
-                          paths:
-                            - /
-                      tls:
-                        - secretName: nginx-tls
-                          hosts:
-                            - projetojack-viniciusmatos.com
-                    
-                    resources:
-                      limits:
-                        cpu: "500m"
-                        memory: "128Mi"
-                      requests:
-                        cpu: "250m"
-                        memory: "64Mi"
+                          desafio: jackexperts
+                      spec:
+                        containers:
+                          - name: nginx
+                            image: nginx:alpine
+                            ports:
+                              - containerPort: 80
+                            volumeMounts:
+                              - name: html-volume
+                                mountPath: /usr/share/nginx/html
+                            resources:
+                              limits:
+                                memory: "128Mi"
+                                cpu: "500m"
+                        volumes:
+                          - name: html-volume
+                            configMap:
+                              name: nginx-html-configmap
                 </pre>
             </div>
 
@@ -267,24 +231,25 @@ docker push viniciusbaratt0mat0s/projetojack:1.5
 
             <div class="code-box">
                 <pre>
-                    apiVersion: networking.k8s.io/v1
-                    kind: Ingress
-                    metadata:
-                      name: {{ include "nginx.fullname" . }}
-                      annotations:
-                        nginx.ingress.kubernetes.io/rewrite-target: /
-                    spec:
-                      rules:
-                        - host: {{ .Values.ingress.host }}
-                          http:
-                            paths:
-                              - path: /
-                                pathType: Prefix
-                                backend:
-                                  service:
-                                    name: {{ include "nginx.fullname" . }}
-                                    port:
-                                      number: {{ .Values.service.port }}
+                  apiVersion: networking.k8s.io/v1
+                  kind: Ingress
+                  metadata:
+                    name: projetojack-ingress
+                    namespace: projetojack
+                    annotations:
+                      nginx.ingress.kubernetes.io/rewrite-target: /
+                  spec:
+                    rules:
+                    - host: localhost
+                      http:
+                        paths:
+                        - path: /
+                          pathType: Prefix
+                          backend:
+                            service:
+                              name: projetojack-service
+                              port:
+                                number: 8080
                 </pre>
             </div>
         </section>
@@ -293,6 +258,12 @@ docker push viniciusbaratt0mat0s/projetojack:1.5
             <h2>Conclusão</h2>
             <p>O projeto é hospeda um projeto configurado com Helm dentro de um cluster. Atendendo os requisitos do
                 desafio, sendo seguro e personalizável</p>
+
+            <p>Foi um projeto intrigante, porém estressante, talvez por falta de um conhecimento sólido envolvendo o fluxo real de desenvolvimento, 
+            houveram algumas coisas que não foram concluídas, por exemplo, a abertura de portas via Ingress, o projeto só é acessado via
+            comando kubectl port-forward service/projetojack-service 8080:80. O projeto foi feito "em conjunto" com os colegas Armando e Gustavo, dos quais nos ajudamos
+            igualmente, resolvendo alguns problemas comuns para ambos os lados, também, recebendo uma ajudinha do ChatGPT, pois sem instruções concretas, não conseguiríamos
+            concluir a aplicação.</p>
         </section>
     </div>
 
